@@ -1,4 +1,11 @@
 """
+name:persephone
+class:cs311
+professor: pinto
+date:10/30/2026
+assignment: hw4? hw5?
+"""
+"""
 Homework 5: The Top-K Countdown -- starter.
 
 Complete heapify and find_k_largest below. Requires your completed
@@ -19,7 +26,15 @@ def heapify(data: List[float]) -> None:
     build this via repeated insert() calls.
     """
     # TODO
-    raise NotImplementedError
+    heap = MinHeap()
+    heap._data = data
+    _len = len(data)
+    if _len <= 1:
+        return
+    nonleaves = (_len - 1) // 2
+    for i in range(nonleaves, -1, -1):
+        heap._sift_down(i)
+    #raise NotImplementedError
 
 
 def find_k_largest(data: List[float], k: int) -> List[float]:
@@ -31,4 +46,19 @@ def find_k_largest(data: List[float], k: int) -> List[float]:
     Must run in O(n log k), not O(n log n).
     """
     # TODO
-    raise NotImplementedError
+    if k <= 0 or not data:
+        return []
+    largest = MinHeap()
+    for val in data:
+        if len(largest) < k:
+            largest.insert(val)
+        elif val > largest._data[0]:
+            largest.extract_min()
+            largest.insert(val) 
+    # Extract all elements from the min-heap and reverse to get descending order
+    result = []
+    while len(largest) > 0:
+        result.append(largest.extract_min())
+    return result[::-1]
+    #raise NotImplementedError
+   
